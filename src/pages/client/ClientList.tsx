@@ -54,6 +54,7 @@ const ClientList: React.FC = () => {
           id: '2',
           firstname: 'Jorge',
           surname: 'Freeman',
+          email: 'mail1@mail1.com',
           phone: '1231231231',
           address: 'jeez av 123'
         },
@@ -61,6 +62,7 @@ const ClientList: React.FC = () => {
           id: '3',
           firstname: 'Maria',
           surname: 'Unfreeman',
+          email: 'mail1@mail1.com',
           phone: '3453453453',
           address: 'nope blvd 555'
         }
@@ -103,11 +105,13 @@ const ClientList: React.FC = () => {
                             <IonCol>Actions</IonCol>
                         </IonRow>
 
+                        {clients.map((clients:any)=>
+                        /*for each client it will return a row */
                         <IonRow>
-                            <IonCol>Facundo Bardi</IonCol>
-                            <IonCol>mail@mail.com</IonCol>
-                            <IonCol>111222111</IonCol>
-                            <IonCol>direccion 232</IonCol>
+                            <IonCol>{clients.firstname} {clients.surname}</IonCol>
+                            <IonCol>{clients.email}</IonCol>
+                            <IonCol>{clients.phone}</IonCol>
+                            <IonCol>{clients.address}</IonCol>
                             <IonCol>
                               <IonButton color='primary' fill='clear' >
                                 <IonIcon icon={pencil}/>
@@ -119,6 +123,7 @@ const ClientList: React.FC = () => {
                               </IonButton>
                             </IonCol>
                         </IonRow>
+                        )}
                     </IonGrid>
                 </IonCard>
             </IonContent>
