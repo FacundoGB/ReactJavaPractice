@@ -15,6 +15,7 @@ import {
     IonToolbar
 } from '@ionic/react';
 import {add, pencil, close} from 'ionicons/icons';
+import { useEffect, useState } from 'react';
 import {Redirect, useParams} from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
 
@@ -25,6 +26,48 @@ const ClientList: React.FC = () => {
         name: string;
     } > ();
 
+    /*
+      We'll mock using fake data.
+      We create a function that will search clients. It will load a list of clients
+      said list will be assigned to a variable
+    */
+    
+   const [clients, setClients] = useState<any>([]);/* this array will be called when we do a search*/
+  
+   /** When we access the client page we need that frist there's a search against the API 
+   * for that we use:
+   */
+  useEffect(() => {
+
+    /**
+     * This will be exectued automatically when it first load
+     * in [] go the components that when they are modified are executed. If we put nothing it will execute only once
+     */
+    search();
+    /**With search() it will call the api and fill with data the grid */
+  }, []); 
+
+    const search = () => {
+      const exampleData = [
+        //each {} is an object
+        {
+          id: '2',
+          firstname: 'Jorge',
+          surname: 'Freeman',
+          phone: '1231231231',
+          address: 'jeez av 123'
+        },
+        {
+          id: '3',
+          firstname: 'Maria',
+          surname: 'Unfreeman',
+          phone: '3453453453',
+          address: 'nope blvd 555'
+        }
+      ];
+      setClients(exampleData);
+
+    }
     return (
         <IonPage>
             <IonHeader>
