@@ -18,6 +18,7 @@ import {add, pencil, close} from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import {Redirect, useParams} from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
+import { searchClients} from './ClientApi';
 
 
 const ClientList: React.FC = () => {
@@ -48,27 +49,8 @@ const ClientList: React.FC = () => {
   }, []); 
 
     const search = () => {
-      const exampleData = [
-        //each {} is an object
-        {
-          id: '2',
-          firstname: 'Jorge',
-          surname: 'Freeman',
-          email: 'mail1@mail1.com',
-          phone: '1231231231',
-          address: 'jeez av 123'
-        },
-        {
-          id: '3',
-          firstname: 'Maria',
-          surname: 'Unfreeman',
-          email: 'mail1@mail1.com',
-          phone: '3453453453',
-          address: 'nope blvd 555'
-        }
-      ];
-      setClients(exampleData);
-
+      let result = searchClients();
+      setClients(result);
     }
     return (
         <IonPage>
