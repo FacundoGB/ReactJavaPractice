@@ -18,7 +18,7 @@ import {add, pencil, close} from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import {Redirect, useParams} from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
-import { searchClients} from './ClientApi';
+import { saveClients, searchClients} from './ClientApi';
 
 
 const ClientList: React.FC = () => {
@@ -52,6 +52,19 @@ const ClientList: React.FC = () => {
       let result = searchClients();
       setClients(result);
     }
+
+    const testLocalStorage = () => {
+        const test = {
+            id: '1',
+            firstname: 'Facundo',
+            surname: 'Bardi',
+            email: 'mail1@mail1.com',
+            phone: '123123123',
+            address: 'av testing 123'
+        }
+        saveClients(test);
+    }
+
     return (
         <IonPage>
             <IonHeader>
@@ -108,6 +121,10 @@ const ClientList: React.FC = () => {
                         )}
                     </IonGrid>
                 </IonCard>
+                <IonButton onClick={testLocalStorage} color='primary' fill='clear'>
+                    Testing Local Storage.
+                </IonButton>
+                
             </IonContent>
         </IonPage>
     );
