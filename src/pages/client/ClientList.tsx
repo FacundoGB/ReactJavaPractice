@@ -16,9 +16,9 @@ import {
 } from '@ionic/react';
 import {add, pencil, close} from 'ionicons/icons';
 import { useEffect, useState } from 'react';
-import {Redirect, useParams} from 'react-router';
+import {Redirect, useHistory, useParams} from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
-import { saveClients, searchClients} from './ClientApi';
+import { removeClients, saveClients, searchClients} from './ClientApi';
 
 
 const ClientList: React.FC = () => {
@@ -38,6 +38,9 @@ const ClientList: React.FC = () => {
    /** When we access the client page we need that frist there's a search against the API 
    * for that we use:
    */
+
+   const history = useHistory();
+
   useEffect(() => {
 
     /**
@@ -53,6 +56,12 @@ const ClientList: React.FC = () => {
       setClients(result);
     }
 
+    const remove = (id: string) => {
+        removeClients(id);
+        //we remove the client by id but no new renderization of data
+        search();
+        //refreshed data
+    }
     const testLocalStorage = () => {
         const test = {
             id: '1',
@@ -63,6 +72,12 @@ const ClientList: React.FC = () => {
             address: 'av testing 123'
         }
         saveClients(test);
+    }
+    
+    const addClient = () => {
+        // this adds rout and changes page 
+        history.push('/page/clients/new');
+
     }
 
     return (
@@ -85,7 +100,7 @@ const ClientList: React.FC = () => {
                 <IonCard>
                     <IonTitle>Client Management</IonTitle>
                     <IonItem>
-                        <IonButton color="primary" fill='solid' slot='end' size='default'>
+                        <IonButton onClick={addClient} color="primary" fill='solid' slot='end' size='default'>
                             <IonIcon icon={add}/>
                             Add Client
                         </IonButton>
@@ -112,7 +127,7 @@ const ClientList: React.FC = () => {
                                 <IonIcon icon={pencil}/>
                                 
                               </IonButton>
-                              <IonButton color='danger' fill='clear' >
+                              <IonButton onClick={() => remove(clients.id)} color='danger' fill='clear' >
                                 <IonIcon icon={close}/>
                                 
                               </IonButton>
