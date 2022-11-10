@@ -18,7 +18,21 @@ if(!localStorage['clients']) {
     clients = JSON.parse(clients);  
     return clients;
 }
-export function removeClients() {}
+export function removeClients(id: string) {
+    //functionality with cached data, similar to save
+    let clients = searchClients();
+    /**
+     * to delete we use .splice
+     * to search index we use findIndex that arrays have
+     * it compares the id of each client with the one recieved, returns if same
+     * we store result in variable. We use any until we fix it
+    */
+    let index = clients.findIndex((clients:any) => clients.id == id);
+    clients.splice(index, 1);
+    //we then refresh the localstorage with all elements except deleted
+    localStorage['clients'] = JSON.stringify(clients);
+    
+}
 
 export function saveClients(client:any) { 
     /**
