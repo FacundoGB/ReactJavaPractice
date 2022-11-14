@@ -4,7 +4,7 @@
  */
 
 
-export function searchClients() { 
+export function searchClient() { 
     /**
  * This function calls the API and returns the data list
  * LocalStorage only allows to save string not arrays,
@@ -18,9 +18,9 @@ if(!localStorage['clients']) {
     clients = JSON.parse(clients);  
     return clients;
 }
-export function removeClients(id: string) {
+export function removeClient(id: string) {
     //functionality with cached data, similar to save
-    let clients = searchClients();
+    let clients = searchClient();
     /**
      * to delete we use .splice
      * to search index we use findIndex that arrays have
@@ -34,12 +34,32 @@ export function removeClients(id: string) {
     
 }
 
-export function saveClients(client:any) { 
+export function saveClient(client:any) { 
     /**
      * This function saves new clients and edits
         We bring the data. If they dont exist we make them   
      */
-    let clients = searchClients(); //array with clients
-    clients.push(client); //in that array we add the client we recive [].push(client)
+    let clients = searchClient(); //array with clients
+    
+    if(client.id) {
+        //edit - search by id & replace
+        let index = clients.findIndex((c:any) => c.id == client.id);
+        
+        if(index >=0) {
+            clients[index] = client;
+        }
+        
+    }else {
+        //new - generates id & does a push to the array
+        client.id = Math.round(Math.random()*10000);
+        clients.push(client);
+
+    }
+    //clients.push(client); //in that array we add the client we recive [].push(client)
     localStorage['clients'] = JSON.stringify(clients); //we transform it into a string
+}
+
+export function searchClientById(id:string) {
+    let clients = searchClient();
+    return clients.find((client: any) => client.id == id);
 }
