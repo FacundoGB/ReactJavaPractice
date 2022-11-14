@@ -12,72 +12,75 @@ import {
     IonPage,
     IonRow,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    IonLabel,
+    IonInput
 } from '@ionic/react';
-import {add, pencil, close} from 'ionicons/icons';
+import { add, pencil, close, checkmark } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
-import {Redirect, useParams} from 'react-router';
-import ExploreContainer from '../../components/ExploreContainer';
-import { removeClients, saveClients, searchClients} from './ClientApi';
+import { Redirect, useHistory, useParams } from 'react-router';
+import { removeClient, saveClient, searchClient, searchClientById } from './ClientApi';
 
 
 const ClientEdit: React.FC = () => {
 
-    const {name, id} = useParams < {
+    const { name, id } = useParams<{
         name: string;
         id: string;
-    } > ();
+    }>();
 
     /*
       We'll mock using fake data.
       We create a function that will search clients. It will load a list of clients
       said list will be assigned to a variable
     */
-    
-   const [clients, setClients] = useState<any>([]);/* this array will be called when we do a search*/
-  
-   /** When we access the client page we need that frist there's a search against the API 
-   * for that we use:
-   */
-  useEffect(() => {
 
-    /**
-     * This will be exectued automatically when it first load
-     * in [] go the components that when they are modified are executed. If we put nothing it will execute only once
-     */
-    search();
-    /**With search() it will call the api and fill with data the grid */
-  }, []); 
-  
-  const remove = (id: string) => {
-    removeClients(id);
-    //we remove the client by id but no new renderization of data
-    search();
-    //refreshed data
-}
-const testLocalStorage = () => {
-    const test = {
-        id: '1',
-        firstname: 'Facundo',
-        surname: 'Bardi',
-        email: 'mail1@mail1.com',
-        phone: '123123123',
-        address: 'av testing 123'
-    }
-    saveClients(test);
-}
+    const [client, setClient] = useState<any>({});/* this array will be called when we do a search*/
+
+    /** When we access the client page we need that frist there's a search against the API 
+    * for that we use:
+    */
+    useEffect(() => {
+
+        /**
+         * This will be exectued automatically when it first load
+         * in [] go the components that when they are modified are executed. If we put nothing it will execute only once
+         */
+        search();
+        /**With search() it will call the api and fill with data the grid */
+    }, []);
+    const history = useHistory();
 
     const search = () => {
-      //let result = searchClients();
-      //setClients(result);
+        if(id !== 'new') {
+            let result = searchClientById(id);
+            setClient(result);
+        }
     }
+
+    const save = () => {
+        //this function calls the api saveClients
+
+        /**
+         * id client.id = Math.round(Math.random()*100000);
+         * created random id
+         * we use only saveClient(client) because when it saves the client
+         * if the client is new its empty, else it brings it from the search
+         * and gives us the id. In the api we give the if
+         */
+        debugger;   
+        saveClient(client);
+        history.push('/page/clients')
+    }
+    
+
 
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonMenuButton/>
+                        <IonMenuButton />
                     </IonButtons>
                     <IonTitle>{name}</IonTitle>
                 </IonToolbar>
@@ -90,14 +93,50 @@ const testLocalStorage = () => {
                     </IonToolbar>
                 </IonHeader>
                 <IonCard>
-                    <IonTitle>Client Management {id}</IonTitle>
+                    <IonTitle>{id === 'new' ? 'Set New Client' : 'Edit Client'}</IonTitle>
+                    <IonRow>
+                        <IonCol>
+                            <IonItem>
+                                <IonLabel position="stacked">Name</IonLabel>
+                                <IonInput onIonChange={e => client.firstname = e.detail.value} value={client.firstname}></IonInput>
+                            </IonItem>
+                        </IonCol>
+
+                        <IonCol>
+                            <IonItem>
+                                <IonLabel position="stacked">Surname</IonLabel>
+                                <IonInput onIonChange={e => client.surname = e.detail.value} value={client.surname}></IonInput>
+                            </IonItem>
+                        </IonCol>
+                    </IonRow>
+                    <IonRow>
+                        <IonCol>
+                            <IonItem>
+                                <IonLabel position="stacked">Email</IonLabel>
+                                <IonInput onIonChange={e => client.email = e.detail.value} value={client.email}></IonInput>
+                            </IonItem>
+                        </IonCol>
+
+                        <IonCol>
+                            <IonItem>
+                                <IonLabel position="stacked">Adress</IonLabel>
+                                <IonInput onIonChange={e => client.address = e.detail.value} value={client.address}></IonInput>
+                            </IonItem>
+                        </IonCol>
+                        <IonCol>
+                            <IonItem>
+                                <IonLabel position="stacked">Phone</IonLabel>
+                                <IonInput onIonChange={e => client.phone = e.detail.value} value={client.phone}></IonInput>
+                            </IonItem>
+                        </IonCol>
+                    </IonRow>
                     <IonItem>
-                        <IonButton color="primary" fill='solid' slot='end' size='default'>
-                            <IonIcon icon={add}/>
+                        <IonButton onClick={save} color="primary" fill='solid' slot='end' size='default'>
+                            <IonIcon icon={checkmark} />
                             Save Changes
                         </IonButton>
                     </IonItem>
-                </IonCard>                
+                </IonCard>
             </IonContent>
         </IonPage>
     );
