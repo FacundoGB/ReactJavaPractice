@@ -18,7 +18,7 @@ import {add, pencil, close} from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import {Redirect, useHistory, useParams} from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
-import { removeClients, saveClients, searchClients} from './ClientApi';
+import { removeClient, saveClient, searchClient} from './ClientApi';
 
 
 const ClientList: React.FC = () => {
@@ -49,29 +49,23 @@ const ClientList: React.FC = () => {
      */
     search();
     /**With search() it will call the api and fill with data the grid */
-  }, []); 
+  }, [history.location.pathname]); 
 
     const search = () => {
-      let result = searchClients();
+      let result = searchClient();
       setClients(result);
     }
 
     const remove = (id: string) => {
-        removeClients(id);
+        removeClient(id);
         //we remove the client by id but no new renderization of data
         search();
         //refreshed data
     }
-    const testLocalStorage = () => {
-        const test = {
-            id: '1',
-            firstname: 'Facundo',
-            surname: 'Bardi',
-            email: 'mail1@mail1.com',
-            phone: '123123123',
-            address: 'av testing 123'
-        }
-        saveClients(test);
+
+    const editClient = (id:string) => {
+        // this adds rout and changes page 
+        history.push('/page/clients/' + id);
     }
     
     const addClient = () => {
@@ -115,19 +109,19 @@ const ClientList: React.FC = () => {
                             <IonCol>Actions</IonCol>
                         </IonRow>
 
-                        {clients.map((clients:any)=>
+                        {clients.map((client:any)=>
                         /*for each client it will return a row */
                         <IonRow>
-                            <IonCol>{clients.firstname} {clients.surname}</IonCol>
-                            <IonCol>{clients.email}</IonCol>
-                            <IonCol>{clients.phone}</IonCol>
-                            <IonCol>{clients.address}</IonCol>
+                            <IonCol>{client.firstname} {client.surname}</IonCol>
+                            <IonCol>{client.email}</IonCol>
+                            <IonCol>{client.phone}</IonCol>
+                            <IonCol>{client.address}</IonCol>
                             <IonCol>
-                              <IonButton color='primary' fill='clear' >
+                              <IonButton onClick={() => editClient(client.id)} color='primary' fill='clear' >
                                 <IonIcon icon={pencil}/>
                                 
                               </IonButton>
-                              <IonButton onClick={() => remove(clients.id)} color='danger' fill='clear' >
+                              <IonButton onClick={() => remove(client.id)} color='danger' fill='clear' >
                                 <IonIcon icon={close}/>
                                 
                               </IonButton>
@@ -135,11 +129,7 @@ const ClientList: React.FC = () => {
                         </IonRow>
                         )}
                     </IonGrid>
-                </IonCard>
-                <IonButton onClick={testLocalStorage} color='primary' fill='clear'>
-                    Testing Local Storage.
-                </IonButton>
-                
+                </IonCard>   
             </IonContent>
         </IonPage>
     );
