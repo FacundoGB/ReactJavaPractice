@@ -20,6 +20,7 @@ import { add, pencil, close, checkmark } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { Redirect, useHistory, useParams } from 'react-router';
 import { removeClient, saveClient, searchClient, searchClientById } from './ClientApi';
+import ClientInterface from './ClientInterface';
 
 
 const ClientEdit: React.FC = () => {
@@ -35,7 +36,7 @@ const ClientEdit: React.FC = () => {
       said list will be assigned to a variable
     */
 
-    const [client, setClient] = useState<any>({});/* this array will be called when we do a search*/
+    const [client, setClient] = useState<ClientInterface>({});
 
     /** When we access the client page we need that frist there's a search against the API 
     * for that we use:
@@ -98,14 +99,14 @@ const ClientEdit: React.FC = () => {
                         <IonCol>
                             <IonItem>
                                 <IonLabel position="stacked">Name</IonLabel>
-                                <IonInput onIonChange={e => client.firstname = e.detail.value} value={client.firstname}></IonInput>
+                                <IonInput onIonChange={e => client.firstname = String(e.detail.value)} value={client.firstname}></IonInput>
                             </IonItem>
                         </IonCol>
 
                         <IonCol>
                             <IonItem>
                                 <IonLabel position="stacked">Surname</IonLabel>
-                                <IonInput onIonChange={e => client.surname = e.detail.value} value={client.surname}></IonInput>
+                                <IonInput onIonChange={e => client.surname = String(e.detail.value)} value={client.surname}></IonInput>
                             </IonItem>
                         </IonCol>
                     </IonRow>
@@ -113,20 +114,20 @@ const ClientEdit: React.FC = () => {
                         <IonCol>
                             <IonItem>
                                 <IonLabel position="stacked">Email</IonLabel>
-                                <IonInput onIonChange={e => client.email = e.detail.value} value={client.email}></IonInput>
+                                <IonInput onIonChange={e => client.email = String(e.detail.value)} value={client.email}></IonInput>
                             </IonItem>
                         </IonCol>
 
                         <IonCol>
                             <IonItem>
                                 <IonLabel position="stacked">Adress</IonLabel>
-                                <IonInput onIonChange={e => client.address = e.detail.value} value={client.address}></IonInput>
+                                <IonInput onIonChange={e => client.address = String(e.detail.value)} value={client.address}></IonInput>
                             </IonItem>
                         </IonCol>
                         <IonCol>
                             <IonItem>
                                 <IonLabel position="stacked">Phone</IonLabel>
-                                <IonInput onIonChange={e => client.phone = e.detail.value} value={client.phone}></IonInput>
+                                <IonInput onIonChange={e => client.phone = String(e.detail.value)} value={client.phone}></IonInput>
                             </IonItem>
                         </IonCol>
                     </IonRow>

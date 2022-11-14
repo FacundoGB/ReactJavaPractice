@@ -1,8 +1,5 @@
-/**
- * As test we will not call the API. 
- * We will store in browser cache.
- */
-
+import ClientInterface from "./ClientInterface";
+import Client from "./ClientInterface";
 
 export function searchClient() { 
     /**
@@ -27,35 +24,33 @@ export function removeClient(id: string) {
      * it compares the id of each client with the one recieved, returns if same
      * we store result in variable. We use any until we fix it
     */
-    let index = clients.findIndex((clients:any) => clients.id == id);
+    let index = clients.findIndex((clients:ClientInterface) => clients.id == id);
     clients.splice(index, 1);
     //we then refresh the localstorage with all elements except deleted
     localStorage['clients'] = JSON.stringify(clients);
     
 }
 
-export function saveClient(client:any) { 
+
     /**
      * This function saves new clients and edits
         We bring the data. If they dont exist we make them   
+
      */
+export function saveClient(client:ClientInterface) { 
     let clients = searchClient(); //array with clients
-    
     if(client.id) {
         //edit - search by id & replace
-        let index = clients.findIndex((c:any) => c.id == client.id);
+        let index = clients.findIndex((c:ClientInterface) => c.id == client.id);
         
         if(index >=0) {
             clients[index] = client;
         }
-        
     }else {
         //new - generates id & does a push to the array
-        client.id = Math.round(Math.random()*10000);
+        client.id = String(Math.round(Math.random()*10000));
         clients.push(client);
-
     }
-    //clients.push(client); //in that array we add the client we recive [].push(client)
     localStorage['clients'] = JSON.stringify(clients); //we transform it into a string
 }
 

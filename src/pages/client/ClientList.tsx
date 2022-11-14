@@ -19,6 +19,7 @@ import { useEffect, useState } from 'react';
 import {Redirect, useHistory, useParams} from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
 import { removeClient, saveClient, searchClient} from './ClientApi';
+import ClientInterface from './ClientInterface';
 
 
 const ClientList: React.FC = () => {
@@ -27,28 +28,13 @@ const ClientList: React.FC = () => {
         name: string;
     } > ();
 
-    /*
-      We'll mock using fake data.
-      We create a function that will search clients. It will load a list of clients
-      said list will be assigned to a variable
-    */
     
-   const [clients, setClients] = useState<any>([]);/* this array will be called when we do a search*/
-  
-   /** When we access the client page we need that frist there's a search against the API 
-   * for that we use:
-   */
-
+   const [clients, setClients] = useState<ClientInterface[]>([]); /* this state will be an array of the Clients interface and default will be an empty array*/
    const history = useHistory();
 
   useEffect(() => {
-
-    /**
-     * This will be exectued automatically when it first load
-     * in [] go the components that when they are modified are executed. If we put nothing it will execute only once
-     */
-    search();
     /**With search() it will call the api and fill with data the grid */
+    search();
   }, [history.location.pathname]); 
 
     const search = () => {
@@ -57,15 +43,15 @@ const ClientList: React.FC = () => {
     }
 
     const remove = (id: string) => {
+         //we remove the client by id but no new renderization of data
         removeClient(id);
-        //we remove the client by id but no new renderization of data
+       //refreshed data
         search();
-        //refreshed data
     }
 
     const editClient = (id:string) => {
         // this adds rout and changes page 
-        history.push('/page/clients/' + id);
+        history.push('/page/client/' + id);
     }
     
     const addClient = () => {
@@ -117,11 +103,11 @@ const ClientList: React.FC = () => {
                             <IonCol>{client.phone}</IonCol>
                             <IonCol>{client.address}</IonCol>
                             <IonCol>
-                              <IonButton onClick={() => editClient(client.id)} color='primary' fill='clear' >
+                              <IonButton onClick={() => editClient(String(client.id))} color='primary' fill='clear' >
                                 <IonIcon icon={pencil}/>
                                 
                               </IonButton>
-                              <IonButton onClick={() => remove(client.id)} color='danger' fill='clear' >
+                              <IonButton onClick={() => remove(String(client.id))} color='danger' fill='clear' >
                                 <IonIcon icon={close}/>
                                 
                               </IonButton>
