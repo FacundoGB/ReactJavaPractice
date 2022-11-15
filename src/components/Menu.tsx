@@ -25,7 +25,7 @@ const appPages: AppPage[] = [
   {
     title: 'Clients',
     url: '/page/clients',
-    iosIcon: mailOutline,
+    iosIcon: peopleSharp,
     mdIcon: peopleSharp
   },
   {
@@ -33,6 +33,12 @@ const appPages: AppPage[] = [
     url: '/page/employees',
     iosIcon: paperPlaneOutline,
     mdIcon: paperPlaneSharp
+  },
+  {
+    title: 'Vendors',
+    url: '/page/Vendors',
+    iosIcon: peopleSharp,
+    mdIcon: peopleSharp
   },
 ];
 
