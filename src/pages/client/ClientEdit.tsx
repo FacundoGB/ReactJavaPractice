@@ -20,7 +20,7 @@ import { add, pencil, close, checkmark } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { Redirect, useHistory, useParams } from 'react-router';
 import { removeClient, saveClient, searchClient, searchClientById } from './ClientApi';
-import ClientInterface from './ClientInterface';
+import ClientInterface from './Client';
 
 
 const ClientEdit: React.FC = () => {

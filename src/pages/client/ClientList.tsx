@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 import {Redirect, useHistory, useParams} from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
 import { removeClient, saveClient, searchClient} from './ClientApi';
-import ClientInterface from './ClientInterface';
+import ClientInterface from './Client';
 
 
 const ClientList: React.FC = () => {
