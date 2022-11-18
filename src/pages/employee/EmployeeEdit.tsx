@@ -20,7 +20,7 @@ import { add, pencil, close, checkmark } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { Redirect, useHistory, useParams } from 'react-router';
 import {saveEmployee, searchEmployeeById } from './EmployeeApi';
-import EmployeeInterface from './EmployeeInterface';
+import Employee from './Employee';
 
 
 
@@ -31,7 +31,7 @@ const EmployeeEdit: React.FC = () => {
         id: string;
     }>();
 
-    const [employee, setEmployee] = useState<EmployeeInterface>({});
+    const [employee, setEmployee] = useState<Employee>({});
 
     useEffect(() => {
         search();
@@ -105,6 +105,12 @@ const EmployeeEdit: React.FC = () => {
                             <IonItem>
                                 <IonLabel position="stacked">Phone</IonLabel>
                                 <IonInput onIonChange={e => employee.phone = String(e.detail.value)} value={employee.phone}></IonInput>
+                            </IonItem>
+                        </IonCol>
+                        <IonCol>
+                            <IonItem>
+                                <IonLabel position="stacked">Salary</IonLabel>
+                                <IonInput onIonChange={e => employee.salary = Number(e.detail.value)} value={employee.salary}></IonInput>
                             </IonItem>
                         </IonCol>
                     </IonRow>

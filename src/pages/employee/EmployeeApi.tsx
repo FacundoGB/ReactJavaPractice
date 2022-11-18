@@ -1,4 +1,4 @@
-import EmployeeInterface from "./EmployeeInterface";
+import EmployeeInterface from "./Employee";
 
 export function searchEmployee() { 
 

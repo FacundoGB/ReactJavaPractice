@@ -18,7 +18,7 @@ import {add, pencil, close} from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import {Redirect, useHistory, useParams} from 'react-router';
 import { removeEmployee, saveEmployee, searchEmployee} from './EmployeeApi';
-import EmployeeInterface from './EmployeeInterface';
+import Employee from './Employee';
 
 const EmployeeList: React.FC = () => {
 
@@ -27,7 +27,7 @@ const EmployeeList: React.FC = () => {
     } > ();
 
     
-   const [employees, setEmployees] = useState<EmployeeInterface[]>([]); 
+   const [employees, setEmployees] = useState<Employee[]>([]); 
    const history = useHistory();
 
   useEffect(() => {
@@ -88,6 +88,7 @@ const EmployeeList: React.FC = () => {
                             <IonCol>Email</IonCol>
                             <IonCol>Phone</IonCol>
                             <IonCol>Adress</IonCol>
+                            <IonCol>Salary</IonCol>
                             <IonCol>Actions</IonCol>
                         </IonRow>
 
@@ -98,6 +99,7 @@ const EmployeeList: React.FC = () => {
                             <IonCol>{employee.email}</IonCol>
                             <IonCol>{employee.phone}</IonCol>
                             <IonCol>{employee.address}</IonCol>
+                            <IonCol>{employee.salary}</IonCol>
                             <IonCol>
                               <IonButton onClick={() => editEmployee(String(employee.id))} color='primary' fill='clear' >
                                 <IonIcon icon={pencil}/>
