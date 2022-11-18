@@ -1,4 +1,4 @@
-import VendorInterface from "./VendorInterface";
+import VendorInterface from "./Vendor";
 
 export function searchVendor() { 
 

@@ -20,7 +20,7 @@ import { add, pencil, close, checkmark } from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import { Redirect, useHistory, useParams } from 'react-router';
 import {saveVendor, searchVendorById } from './VendorApi';
-import VendorInterface from './VendorInterface';
+import Vendor from './Vendor';
 
 
 
@@ -31,7 +31,7 @@ const VendorEdit: React.FC = () => {
         id: string;
     }>();
 
-    const [vendor, setVendor] = useState<VendorInterface>({});
+    const [vendor, setVendor] = useState<Vendor>({});
 
     useEffect(() => {
         search();
@@ -76,14 +76,7 @@ const VendorEdit: React.FC = () => {
                         <IonCol>
                             <IonItem>
                                 <IonLabel position="stacked">Name</IonLabel>
-                                <IonInput onIonChange={e => vendor.firstname = String(e.detail.value)} value={vendor.firstname}></IonInput>
-                            </IonItem>
-                        </IonCol>
-
-                        <IonCol>
-                            <IonItem>
-                                <IonLabel position="stacked">Surname</IonLabel>
-                                <IonInput onIonChange={e => vendor.surname = String(e.detail.value)} value={vendor.surname}></IonInput>
+                                <IonInput onIonChange={e => vendor.name = String(e.detail.value)} value={vendor.name}></IonInput>
                             </IonItem>
                         </IonCol>
                     </IonRow>
@@ -107,6 +100,21 @@ const VendorEdit: React.FC = () => {
                                 <IonInput onIonChange={e => vendor.phone = String(e.detail.value)} value={vendor.phone}></IonInput>
                             </IonItem>
                         </IonCol>
+                    </IonRow>
+                    <IonRow>
+                        <IonCol>
+                            <IonItem>
+                                <IonLabel position="stacked">Web</IonLabel>
+                                <IonInput onIonChange={e => vendor.web = String(e.detail.value)} value={vendor.web}></IonInput>
+                            </IonItem>
+                        </IonCol>
+                        <IonCol>
+                            <IonItem>
+                                <IonLabel position="stacked">Contact</IonLabel>
+                                <IonInput onIonChange={e => vendor.contact = String(e.detail.value)} value={vendor.contact}></IonInput>
+                            </IonItem>
+                        </IonCol>
+
                     </IonRow>
                     <IonItem>
                         <IonButton onClick={save} color="primary" fill='solid' slot='end' size='default'>

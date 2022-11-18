@@ -18,7 +18,7 @@ import {add, pencil, close} from 'ionicons/icons';
 import { useEffect, useState } from 'react';
 import {Redirect, useHistory, useParams} from 'react-router';
 import { removeVendor, saveVendor, searchVendor} from './VendorApi';
-import VendorInterface from './VendorInterface';
+import Vendor from './Vendor';
 
 const VendorList: React.FC = () => {
 
@@ -27,7 +27,7 @@ const VendorList: React.FC = () => {
     } > ();
 
     
-   const [vendors, setVendors] = useState<VendorInterface[]>([]); 
+   const [vendors, setVendors] = useState<Vendor[]>([]); 
    const history = useHistory();
 
   useEffect(() => {
@@ -88,16 +88,20 @@ const VendorList: React.FC = () => {
                             <IonCol>Email</IonCol>
                             <IonCol>Phone</IonCol>
                             <IonCol>Adress</IonCol>
+                            <IonCol>Web</IonCol>
+                            <IonCol>Contact</IonCol>
                             <IonCol>Actions</IonCol>
                         </IonRow>
 
                         {vendors.map((vendor:any)=>
                         /*for each client it will return a row */
                         <IonRow>
-                            <IonCol>{vendor.firstname} {vendor.surname}</IonCol>
+                            <IonCol>{vendor.name}</IonCol>
                             <IonCol>{vendor.email}</IonCol>
                             <IonCol>{vendor.phone}</IonCol>
                             <IonCol>{vendor.address}</IonCol>
+                            <IonCol>{vendor.web}</IonCol>
+                            <IonCol>{vendor.contact}</IonCol>
                             <IonCol>
                               <IonButton onClick={() => editVendor(String(vendor.id))} color='primary' fill='clear' >
                                 <IonIcon icon={pencil}/>
