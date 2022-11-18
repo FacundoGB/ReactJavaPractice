@@ -1,23 +1,25 @@
-import ClientInterface from "./ClientInterface";
-import Client from "./ClientInterface";
+import ClientInterface from "./Client";
+import Client from "./Client";
 
-export function searchClient() { 
+export async function searchClient() { 
     /**
  * This function calls the API and returns the data list
  * LocalStorage only allows to save string not arrays,
  * when we save then we must transform it itno string and when we retrive
  * we transform it back to array
  */
-if(!localStorage['clients']) {
-    localStorage['clients'] = '[]';
+    let response = await fetch('/api/clients', {
+        "method": "GET",
+        "headers": {
+            "Content-Type": 'application/json' 
+        }
+    })
+    return await response.json();
+    
 }
-    let clients = localStorage['clients'];
-    clients = JSON.parse(clients);  
-    return clients;
-}
-export function removeClient(id: string) {
+export async function removeClient(id: string) {
     //functionality with cached data, similar to save
-    let clients = searchClient();
+    let clients = await searchClient();
     /**
      * to delete we use .splice
      * to search index we use findIndex that arrays have
@@ -37,8 +39,8 @@ export function removeClient(id: string) {
         We bring the data. If they dont exist we make them   
 
      */
-export function saveClient(client:ClientInterface) { 
-    let clients = searchClient(); //array with clients
+export async function saveClient(client:ClientInterface) { 
+    let clients = await searchClient(); //array with clients
     if(client.id) {
         //edit - search by id & replace
         let index = clients.findIndex((c:ClientInterface) => c.id == client.id);
@@ -54,7 +56,7 @@ export function saveClient(client:ClientInterface) {
     localStorage['clients'] = JSON.stringify(clients); //we transform it into a string
 }
 
-export function searchClientById(id:string) {
-    let clients = searchClient();
+export async function searchClientById(id:string) {
+    let clients = await searchClient();
     return clients.find((client: any) => client.id == id);
 }
